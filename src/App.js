@@ -1,25 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
-
+import axios from 'axios';
+import { useState, useEffect } from 'react';
+import { Placeholder } from './Placeholder';
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    useEffect(() => {
+        axios.get("http://localhost:3001/users")
+            .then(j => setData(j.data))
+    }, [])
+    const [data, setData] = useState([])
+
+    return (
+        <div className="App">
+
+            {data.map((user, index) => {
+                return (
+                    <Placeholder key={index} name={user.name} hobby={user.hobby} />)
+            })}
+
+        </div>
+    );
 }
 
 export default App;
